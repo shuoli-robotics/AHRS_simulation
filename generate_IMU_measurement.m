@@ -20,36 +20,36 @@ end
 
 %-----------------------------test generated data  -----------------------------%
 %--------------------------------------------------------------------------%
-figure(1)
-subplot(3,1,1)
-plot(GT.TIME,GT.ACC(:,1));
-hold on
-plot(GT.TIME,IMU.ACC(:,1));
-
-subplot(3,1,2)
-plot(GT.TIME,GT.ACC(:,2));
-hold on
-plot(GT.TIME,IMU.ACC(:,2));
-
-subplot(3,1,3)
-plot(GT.TIME,GT.ACC(:,3));
-hold on
-plot(GT.TIME,IMU.ACC(:,3));
-
-figure(2)
-subplot(3,1,1)
-plot(GT.TIME,GT.PQR(:,1));
-hold on
-plot(GT.TIME,IMU.PQR(:,1));
-
-subplot(3,1,2)
-plot(GT.TIME,GT.PQR(:,2));
-hold on
-plot(GT.TIME,IMU.PQR(:,2));
-
-subplot(3,1,3)
-plot(GT.TIME,GT.PQR(:,3));
-hold on
-plot(GT.TIME,IMU.PQR(:,3));
+% figure(1)
+% subplot(3,1,1)
+% plot(GT.TIME,GT.ACC(:,1));
+% hold on
+% plot(GT.TIME,IMU.ACC(:,1));
+% 
+% subplot(3,1,2)
+% plot(GT.TIME,GT.ACC(:,2));
+% hold on
+% plot(GT.TIME,IMU.ACC(:,2));
+% 
+% subplot(3,1,3)
+% plot(GT.TIME,GT.ACC(:,3));
+% hold on
+% plot(GT.TIME,IMU.ACC(:,3));
+% 
+% figure(2)
+% subplot(3,1,1)
+% plot(GT.TIME,GT.PQR(:,1));
+% hold on
+% plot(GT.TIME,IMU.PQR(:,1));
+% 
+% subplot(3,1,2)
+% plot(GT.TIME,GT.PQR(:,2));
+% hold on
+% plot(GT.TIME,IMU.PQR(:,2));
+% 
+% subplot(3,1,3)
+% plot(GT.TIME,GT.PQR(:,3));
+% hold on
+% plot(GT.TIME,IMU.PQR(:,3));
 %--------------------------------------------------------------------------%
 end
