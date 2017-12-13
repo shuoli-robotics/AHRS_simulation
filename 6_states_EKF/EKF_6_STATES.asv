@@ -1,0 +1,29 @@
+function [ output_args ] = EKF_6_STATES( input_args )
+global GT IMU EKF
+[F_syms,H_syms,G_syms,model,h,states] = jacobian_matrix_syms();
+EKF_states = zeros(length(OB_data.TIME),6);
+P_trace_EKF = zeros(length(OB_data.TIME),6);
+
+for i = 1:length(GT.TIME);
+    if i == 1
+        EKF_states(i,:) = [GT.PHI(i) GT.THETA(i) GT.PSI(i) 0 0 0];
+        last_updated_states_EKF =  EKF_states(i,:);
+        last_updated_states_IEKF =  IEKF_states(i,:);
+        last_updated_inputs = [IMU.PQR(i,:)];
+        P_k_k = 10*eye(6);
+        P_trace(i) = trace(P_k_k_EKF);
+        continue;
+    end
+    inputs = IMU.PQR(i,:);
+    EKF_states(i,:) = EKF_states(i-1,:) + prediction_model_kalman_filter(EKF_states(i-1,:),inputs)*GT.STEP;
+    [F,H_k,G] = jacobian_matrix(last_updated_states_EKF,last_updated_inputs,EKF_states(i,:),...
+        Fx_syms,Hx_syms,G_syms);
+    [PHI_k_k_1, Gamma] = c2d(F, G, GT.STEP);
+    P_k_1_k_1 = P_k_k;
+    P_k_k_1 = PHI_k_k_1*P_k_1_k_1*PHI_k_k_1'+Gamma*diag(Q)*Gamma';
+    Z_k = [atan2(-GT.ACC(i,2),-GT.ACC(i,3)), atan2(GT.ACC(i,1),sqrt(GT.ACC(i,2)^2+GT.ACC(i,3)^2))]';
+    K_k = P_k_k_1*H_k'/ (H_k*P_k_k_1*H_k'+R);
+    delta_x_k_k = K_k*(Z_k-Z_k_k_1_EKF');
+    EKF_states(i,:) = EKF_states(i,:) + delta_x_k_k_EKF';
+end
+
