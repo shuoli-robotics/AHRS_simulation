@@ -5,8 +5,8 @@ clc
 
 global GT IMU AHRS
 
-generate_ground_truth_maneuver(1,50);
+generate_ground_truth_maneuver(1,100);
 generate_IMU_measurement()
-complementary_filter();
+%complementary_filter();
 EKF_6_STATES();
 temp = 1;

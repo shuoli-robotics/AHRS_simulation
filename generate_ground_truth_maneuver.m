@@ -48,6 +48,20 @@ for i = 1:time/step
                 cos(GT.PHI(i))*sin(GT.THETA(i))*cos(GT.PSI(i))+sin(GT.PHI(i))*sin(GT.PSI(i))...
                 cos(GT.PHI(i))*sin(GT.THETA(i))*sin(GT.PSI(i))-sin(GT.PHI(i))*cos(GT.PSI(i)) cos(GT.PHI(i))*cos(GT.THETA(i))]*[0 0 -9.8]';
             GT.ACC(i,:)  = ACCEL';
+            
+        case 2
+            GT.PHI(i) = 0;
+            GT.THETA(i) = 0;
+            GT.PSI(i) = 0;
+            GT.PQR(i,1) = 0;
+            GT.PQR(i,2) = 0;
+            GT.PQR(i,3) = 0;
+            ACCEL =  [cos(GT.THETA(i))*cos(GT.PSI(i)) cos(GT.THETA(i))*sin(GT.PSI(i)) -sin(GT.THETA(i));...
+                sin(GT.PHI(i))*sin(GT.THETA(i))*cos(GT.PSI(i))-cos(GT.PHI(i))*sin(GT.PSI(i))...
+                sin(GT.PHI(i))*sin(GT.THETA(i))*sin(GT.PSI(i))+cos(GT.PHI(i))*cos(GT.PSI(i)) sin(GT.PHI(i))*cos(GT.THETA(i));...
+                cos(GT.PHI(i))*sin(GT.THETA(i))*cos(GT.PSI(i))+sin(GT.PHI(i))*sin(GT.PSI(i))...
+                cos(GT.PHI(i))*sin(GT.THETA(i))*sin(GT.PSI(i))-sin(GT.PHI(i))*cos(GT.PSI(i)) cos(GT.PHI(i))*cos(GT.THETA(i))]*[0 0 -9.8]';
+            GT.ACC(i,:)  = ACCEL';
     end
 end
 % %-----------------------------test generated data  -----------------------------%
@@ -70,6 +84,6 @@ end
 % 
 % subplot(3,1,3)
 % plot(GT.TIME,GT.PSI);
-% 
+
 % %--------------------------------------------------------------------------%
 end

@@ -8,7 +8,7 @@ COMP.PHI = zeros(length(GT.TIME),1);
 COMP.THETA = zeros(length(GT.TIME),1);
 COMP.PSI = zeros(length(GT.TIME),1);
 
-K_P = 0.05;
+K_P = 0.01;
 K_I = 0.002;
 sum_error = 0;
 
