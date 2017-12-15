@@ -8,7 +8,7 @@ function [] = generate_ground_truth_maneuver(mode,time)
 
 global GT
 
-step = 0.001;
+step = 0.01;
 phi0 = -pi/4;
 theta0 = pi/6;
 psi0 = pi/2;

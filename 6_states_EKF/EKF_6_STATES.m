@@ -12,7 +12,7 @@ Q = diag([0.2/180*pi 0.2/180*pi 0.2/180*pi 0 0 0]);
 
 %R = diag([IMU.ACC_SIGMA^2  IMU.ACC_SIGMA^2 IMU.ACC_SIGMA^2 IMU.OT_SIGMA^2]);
 % R = diag([IMU.ATT_SIGMA^2  IMU.ATT_SIGMA^2 IMU.OT_SIGMA^2]);
-R = diag([300^2  300^2 100^2]);
+R = diag([1600^2  1600^2 100^2]);
 for i = 1:length(GT.TIME)
     if i == 1
         EKF_states(i,:) = [GT.PHI(i) GT.THETA(i) GT.PSI(i) 0 0 0];
