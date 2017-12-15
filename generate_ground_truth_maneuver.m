@@ -9,7 +9,7 @@ function [] = generate_ground_truth_maneuver(mode,time)
 global GT
 
 step = 0.01;
-phi0 = -pi/6;
+phi0 = -pi/4;
 theta0 = pi/6;
 psi0 = pi/2;
 omega_phi = pi/4;
@@ -70,6 +70,8 @@ end
 %     euler_from_accel(i,1) = atan2(-GT.ACC(i,2),-GT.ACC(i,3));
 %     euler_from_accel(i,2) = atan2(GT.ACC(i,1),sqrt(GT.ACC(i,2)^2+GT.ACC(i,3)^2));
 % end
+
+
 % 
 % figure(1)
 % subplot(3,1,1)

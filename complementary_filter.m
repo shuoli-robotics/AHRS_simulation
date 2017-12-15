@@ -44,37 +44,37 @@ end
 
 %-----------------------------test generated data  -----------------------------%
 %--------------------------------------------------------------------------%
-% figure(1)
-% subplot(3,1,1)
-% plot(GT.TIME,GT.PHI/pi*180);
-% hold on
-% plot(GT.TIME,COMP.PHI/pi*180);
-% 
-% subplot(3,1,2)
-% plot(GT.TIME,GT.THETA/pi*180);
-% hold on
-% plot(GT.TIME,COMP.THETA/pi*180);
-% 
-% subplot(3,1,3)
-% plot(GT.TIME,GT.PSI/pi*180);
-% hold on
-% plot(GT.TIME,COMP.PSI/pi*180);
-% 
-% figure(2)
-% subplot(3,1,1)
-% plot(GT.TIME,GT.PQR(:,1));
-% hold on
-% plot(GT.TIME,IMU.PQR(:,1));
-% 
-% subplot(3,1,2)
-% plot(GT.TIME,GT.PQR(:,2));
-% hold on
-% plot(GT.TIME,IMU.PQR(:,2));
-% 
-% subplot(3,1,3)
-% plot(GT.TIME,GT.PQR(:,3));
-% hold on
-% plot(GT.TIME,IMU.PQR(:,3));
+figure(1)
+subplot(3,1,1)
+plot(GT.TIME,GT.PHI/pi*180);
+hold on
+plot(GT.TIME,COMP.PHI/pi*180);
+
+subplot(3,1,2)
+plot(GT.TIME,GT.THETA/pi*180);
+hold on
+plot(GT.TIME,COMP.THETA/pi*180);
+
+subplot(3,1,3)
+plot(GT.TIME,GT.PSI/pi*180);
+hold on
+plot(GT.TIME,COMP.PSI/pi*180);
+
+figure(2)
+subplot(3,1,1)
+plot(GT.TIME,GT.PQR(:,1));
+hold on
+plot(GT.TIME,IMU.PQR(:,1));
+
+subplot(3,1,2)
+plot(GT.TIME,GT.PQR(:,2));
+hold on
+plot(GT.TIME,IMU.PQR(:,2));
+
+subplot(3,1,3)
+plot(GT.TIME,GT.PQR(:,3));
+hold on
+plot(GT.TIME,IMU.PQR(:,3));
 %--------------------------------------------------------------------------%
 
 end

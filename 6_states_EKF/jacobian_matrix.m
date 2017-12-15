@@ -1,11 +1,5 @@
-function [F,H,G] = jacobian_matrix(estimated_states,inputs,one_step_prediction,Fx_syms,Hx_syms,G_syms)
-% syms x y z v_x v_y v_z real;
-% syms phi theta psi
-% syms b_p b_q b_r
-% syms b_a_x b_a_y b_a_z
-% syms a_x_m a_y_m a_z_m
-% syms p_m q_m r_m
-% syms g 
+function [F,H,G] = jacobian_matrix(estimated_states,inputs,one_step_prediction)
+
 
 phi = estimated_states(1);
 theta = estimated_states(2);
@@ -19,17 +13,6 @@ q_m = inputs(2);
 r_m = inputs(3);
 
 g = 9.8;
-% F = subs(Fx_syms,{x y z v_x v_y v_z phi theta psi b_p b_q b_r b_a_x b_a_y b_a_z ...
-%     p_m q_m r_m a_x_m a_y_m a_z_m g},...
-%     {[estimated_states inputs 9.8]});
-% F = double(F);
-% 
-% H = double(subs(Hx_syms,{x y z v_x v_y v_z phi theta psi b_p b_q b_r b_a_x b_a_y b_a_z},...
-%     {one_step_prediction}));
-% 
-% 
-% G = subs(G_syms,{phi theta psi},{estimated_states(7:9)});
-% G = double(G);
 
 F = [     sin(phi)*tan(theta)*(b_r - r_m) - cos(phi)*tan(theta)*(b_q - q_m),               - cos(phi)*(b_r - r_m)*(tan(theta)^2 + 1) - sin(phi)*(b_q - q_m)*(tan(theta)^2 + 1), 0, -1, -sin(phi)*tan(theta), -cos(phi)*tan(theta); ...
     cos(phi)*(b_r - r_m) + sin(phi)*(b_q - q_m),                                                                                                 0, 0,  0,            -cos(phi),             sin(phi); ...
@@ -41,9 +24,13 @@ F = [     sin(phi)*tan(theta)*(b_r - r_m) - cos(phi)*tan(theta)*(b_q - q_m),    
 phi = one_step_prediction(1);
 theta = one_step_prediction(2);
 psi = one_step_prediction(3);
-H = [                      0,          g*cos(theta), 0, 0, 0, 0;...
-    -g*cos(phi)*cos(theta), g*sin(phi)*sin(theta), 0, 0, 0, 0; ...
-    g*cos(theta)*sin(phi), g*cos(phi)*sin(theta), 0, 0, 0, 0; ...
+% H = [                      0,          g*cos(theta), 0, 0, 0, 0;...
+%     -g*cos(phi)*cos(theta), g*sin(phi)*sin(theta), 0, 0, 0, 0; ...
+%     g*cos(theta)*sin(phi), g*cos(phi)*sin(theta), 0, 0, 0, 0; ...
+%     0,0,1,0,0,0];
+
+H = [1,0, 0, 0, 0, 0;...
+    0,1, 0, 0, 0, 0;...
     0,0,1,0,0,0];
 
 G = [ 1, sin(phi)*tan(theta), cos(phi)*tan(theta);...

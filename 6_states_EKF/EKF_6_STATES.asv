@@ -5,11 +5,13 @@ EKF_states = zeros(length(GT.TIME),6);
 P_trace = zeros(length(GT.TIME),1);
 
 g = 9.8;
-%Q = [IMU.GYRO_SIGMA IMU.GYRO_SIGMA IMU.GYRO_SIGMA]';
-Q = [0.01 0.01 0]';
+% Q = [IMU.GYRO_SIGMA^2 IMU.GYRO_SIGMA^2 IMU.GYRO_SIGMA^2]';
+%Q = [0 0 0]';
+% Q = [IMU.GYRO_SIGMA^2 IMU.GYRO_SIGMA^2 IMU.GYRO_SIGMA^2]';
+Q = diag([0.2/180*pi])
 
-R = diag([IMU.ACC_SIGMA  IMU.ACC_SIGMA IMU.ACC_SIGMA IMU.OT_SIGMA]);
-
+%R = diag([IMU.ACC_SIGMA^2  IMU.ACC_SIGMA^2 IMU.ACC_SIGMA^2 IMU.OT_SIGMA^2]);
+R = diag([IMU.ATT_SIGMA^2  IMU.ATT_SIGMA^2 IMU.OT_SIGMA^2]);
 for i = 1:length(GT.TIME)
     if i == 1
         EKF_states(i,:) = [GT.PHI(i) GT.THETA(i) GT.PSI(i) 0 0 0];
@@ -22,14 +24,20 @@ for i = 1:length(GT.TIME)
   
     inputs = IMU.PQR(i-1,:);
     EKF_states(i,:) = EKF_states(i-1,:) + prediction_model_kalman_filter(EKF_states(i-1,:),inputs)*GT.STEP;
-    [F,H_k,G] = jacobian_matrix(last_updated_states_EKF,last_updated_inputs,EKF_states(i,:),...
-        Fx_syms,Hx_syms,G_syms);
+    [F,H_k,G] = jacobian_matrix(last_updated_states_EKF,last_updated_inputs,EKF_states(i,:));
     [PHI_k_k_1, Gamma] = c2d(F, G, GT.STEP);
     P_k_1_k_1 = P_k_k;
     P_k_k_1 = PHI_k_k_1*P_k_1_k_1*PHI_k_k_1'+Gamma*diag(Q)*Gamma';
-    Z_k_k_1 = [sin(EKF_states(i,2))*g -sin(EKF_states(i,1))*cos(EKF_states(i,2))*g ...
-        -cos(EKF_states(i,1))*cos(EKF_states(i,2))*g EKF_states(i,3)];
-    Z_k = [IMU.ACC(i,1) IMU.ACC(i,2) IMU.ACC(i,3) IMU.OT_HEADING(i)]';
+%     Z_k_k_1 = [sin(EKF_states(i,2))*g -sin(EKF_states(i,1))*cos(EKF_states(i,2))*g ...
+%         -cos(EKF_states(i,1))*cos(EKF_states(i,2))*g EKF_states(i,3)];
+    Z_k_k_1 = [EKF_states(i,1) EKF_states(i,2) EKF_states(i,3)];
+
+%     Z_k = [IMU.ACC(i,1) IMU.ACC(i,2) IMU.ACC(i,3) IMU.OT_HEADING(i)]';
+    
+%     Z_k = [atan2(-IMU.ACC(i,2),-IMU.ACC(i,3)) atan2(IMU.ACC(i,1),sqrt(IMU.ACC(i,2)^2+IMU.ACC(i,3)^2)) ...
+%         IMU.OT_HEADING(i)]';
+
+Z_k = [IMU.PHI(i) IMU.THETA(i) IMU.OT_HEADING(i)]';
     K_k = P_k_k_1*H_k'/ (H_k*P_k_k_1*H_k'+R);
     delta_x_k_k = K_k*(Z_k-Z_k_k_1');
     EKF_states(i,:) = EKF_states(i,:) + delta_x_k_k';
