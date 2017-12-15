@@ -5,7 +5,7 @@ function [] = generate_IMU_measurement()
 global GT IMU
 
 acc_bias = [-0.0 0.0 -0.0];
-gyro_bias = [0.0/180*pi -0.0/180*pi 0.0/180*pi];
+gyro_bias = [0.2/180*pi -0.2/180*pi 0.3/180*pi];
 
 acc_sigma = 5;
 gyro_sigma = 0.2/180*pi;

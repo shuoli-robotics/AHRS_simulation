@@ -8,8 +8,8 @@ COMP.PHI = zeros(length(GT.TIME),1);
 COMP.THETA = zeros(length(GT.TIME),1);
 COMP.PSI = zeros(length(GT.TIME),1);
 
-K_P = 0.01;
-K_I = 0.002;
+K_P = 0.1;
+K_I = 0.02;
 sum_error = 0;
 
 for i = 1:length(GT.TIME)
@@ -18,11 +18,11 @@ for i = 1:length(GT.TIME)
         COMP.THETA(i) = GT.THETA(i);
         COMP.PSI(i) = GT.PSI(i);
     end
-    R_E_B = [cos(GT.THETA(i))*cos(GT.PSI(i)) cos(GT.THETA(i))*sin(GT.PSI(i)) -sin(GT.THETA(i));...
-        sin(GT.PHI(i))*sin(GT.THETA(i))*cos(GT.PSI(i))-cos(GT.PHI(i))*sin(GT.PSI(i))...
-        sin(GT.PHI(i))*sin(GT.THETA(i))*sin(GT.PSI(i))+cos(GT.PHI(i))*cos(GT.PSI(i)) sin(GT.PHI(i))*cos(GT.THETA(i));...
-        cos(GT.PHI(i))*sin(GT.THETA(i))*cos(GT.PSI(i))+sin(GT.PHI(i))*sin(GT.PSI(i))...
-        cos(GT.PHI(i))*sin(GT.THETA(i))*sin(GT.PSI(i))-sin(GT.PHI(i))*cos(GT.PSI(i)) cos(GT.PHI(i))*cos(GT.THETA(i))];
+    R_E_B = [cos(COMP.THETA(i))*cos(COMP.PSI(i)) cos(COMP.THETA(i))*sin(COMP.PSI(i)) -sin(COMP.THETA(i));...
+        sin(COMP.PHI(i))*sin(COMP.THETA(i))*cos(COMP.PSI(i))-cos(COMP.PHI(i))*sin(COMP.PSI(i))...
+        sin(COMP.PHI(i))*sin(COMP.THETA(i))*sin(COMP.PSI(i))+cos(COMP.PHI(i))*cos(COMP.PSI(i)) sin(COMP.PHI(i))*cos(COMP.THETA(i));...
+        cos(COMP.PHI(i))*sin(COMP.THETA(i))*cos(COMP.PSI(i))+sin(COMP.PHI(i))*sin(COMP.PSI(i))...
+        cos(COMP.PHI(i))*sin(COMP.THETA(i))*sin(COMP.PSI(i))-sin(COMP.PHI(i))*cos(COMP.PSI(i)) cos(COMP.PHI(i))*cos(COMP.THETA(i))];
     g_b = R_E_B*[0 0 -9.8]';
     g_b = g_b/norm(g_b);
     acc_m = IMU.ACC(i,:)'/norm(IMU.ACC(i,:));
@@ -39,7 +39,8 @@ for i = 1:length(GT.TIME)
     end
     COMP.PHI(i+1) = att(1);
     COMP.THETA(i+1) = att(2);
-    COMP.PSI(i+1) = att(3);
+    %COMP.PSI(i+1) = att(3);
+    COMP.PSI(i+1)  = IMU.OT_HEADING(i);
 end
 
 %-----------------------------test generated data  -----------------------------%
